@@ -236,7 +236,7 @@ If you found this project useful, consider giving it a ⭐ on GitHub.
 
 ## 📜 License
 
-This project is intended for educational and institutional use. Feel free to customize it according to your organization's needs.
+This project was developed for a client and is showcased in this repository for **portfolio purposes only**. The source code is not intended for commercial redistribution without the client's permission.
 
 
 Made with ❤️ by **Varun Kumar**
