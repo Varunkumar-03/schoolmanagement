@@ -1,0 +1,2903 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HAPPY TUITIONS</title>
+  <link rel="icon" type="image/x-icon" href="https://lh3.googleusercontent.com/d/1RQzWWDrdStBjWZiuZNXk7qzeoQCRJmbI">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #f0f8ff;
+      color: #333;
+      margin: 0;
+      box-sizing: border-box;
+      padding-top: 60px;
+      /* Space for mobile navbar */
+    }
+
+    @media (min-width: 992px) {
+      body {
+        padding-top: 0;
+      }
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      background-color: #ffd700;
+      min-height: 100vh;
+      padding: 0;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .sidebar-content {
+      padding: 0 10px 20px 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar button {
+      margin-bottom: 10px;
+      width: 100%;
+      background-color: #87ceeb;
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      text-align: left;
+      font-weight: bold;
+      white-space: normal;
+      /* Allow text wrap if needed or ellipsis */
+    }
+
+    .sidebar button:hover {
+      background-color: #00bfff;
+      transform: translateX(5px);
+    }
+
+    .content {
+      padding: 20px;
+      padding-bottom: 60px;
+      min-height: 100vh;
+    }
+
+    @media (min-width: 992px) {
+      .content {
+        margin-left: 250px;
+      }
+
+      .offcanvas-lg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+        visibility: visible !important;
+        transform: none !important;
+      }
+
+      .mobile-navbar {
+        display: none;
+      }
+    }
+
+    .table-responsive {
+      margin-bottom: 15px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      /* Smooth scrolling on iOS */
+    }
+
+    /* Ensure tables act like desktop tables on mobile (scrolling instead of squashing) */
+    @media (max-width: 768px) {
+
+      table th,
+      table td {
+        white-space: nowrap;
+      }
+    }
+
+    /* Mobile Card View for Tables */
+    @media (max-width: 768px) {
+
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ffd700;
+        border-radius: 10px;
+        background: #fff;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding: 10px !important;
+        text-align: left;
+        width: 100%;
+        display: block;
+      }
+
+      td:before {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding-bottom: 2px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #666;
+        font-size: 0.85rem;
+        content: attr(data-label);
+      }
+
+      td>* {
+        display: inline-block;
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+
+      .btn-sm {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    /* Cards and other elements */
+    .card {
+      background-color: #fffacd;
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      background-color: #ffd700;
+      font-weight: bold;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0 !important;
+    }
+
+    .form-control,
+    .form-select,
+    .btn {
+      border-radius: 5px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+      margin-top: auto;
+      font-size: 0.8rem;
+    }
+
+    /* Login Specifics */
+    #login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      background-color: #f0f8ff;
+      position: fixed;
+      /* Ensure it covers everything */
+      top: 0;
+      left: 0;
+      z-index: 2000;
+    }
+
+    #loginForm {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 5px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    canvas {
+      width: 100%;
+      max-height: 300px;
+    }
+
+    /* Enhanced Table Clarity */
+    .table-premium {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .table-premium thead {
+      background: linear-gradient(135deg, #ff4d4d, #ff3333) !important;
+      color: white;
+    }
+
+    .table-premium th {
+      padding: 15px 12px !important;
+      border: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .table-premium td {
+      padding: 12px;
+      vertical-align: middle;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .table-premium tbody tr:hover {
+      background-color: #fff9f9;
+    }
+
+    .bg-pending-row {
+      background-color: #fffaf0;
+    }
+
+    .table-premium th {
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    /* Faculty ID Card Styles */
+    .faculty-id-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 15px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid #eef2f7;
+    }
+
+    .faculty-id-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .id-card-photo {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      background-color: #fff;
+      image-rendering: -webkit-optimize-contrast; /* Sharpens images */
+    }
+
+    .id-card-photo-container {
+      background: linear-gradient(135deg, #87ceeb 0%, #ffd700 100%);
+      padding: 25px 0;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .id-card-photo-wrapper {
+      position: absolute;
+      bottom: -55px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .id-card-details {
+      padding-top: 10px;
+    }
+
+    .id-card-subjects .badge {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 15px;
+      background-color: #f0f4f8;
+      color: #4a5568;
+      border: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="login">
+    <div id="loginForm" class="card">
+      <div class="card-header text-center">
+        <img src="https://lh3.googleusercontent.com/d/1RQzWWDrdStBjWZiuZNXk7qzeoQCRJmbI" alt="Logo" class="mb-2"
+          style="max-width: 100px;"><br>
+        Login to HAPPY TUITIONS
+      </div>
+      <div class="card-body">
+        <input type="text" id="username" class="form-control mb-3" placeholder="Username"
+          onkeypress="handleEnter(event)">
+        <input type="password" id="password" class="form-control mb-3" placeholder="Password"
+          onkeypress="handleEnter(event)">
+        <button class="btn btn-primary w-100" onclick="login()">Login</button>
+        <div class="mt-3 text-center">
+          <a href="#" onclick="openChangePasswordModal(); return false;" class="text-decoration-none small">Change
+            Password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="main" style="display:none;">
+    <!-- Mobile Header -->
+    <nav class="navbar mobile-navbar fixed-top bg-warning p-2 shadow-sm d-lg-none">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">HAPPY TUITIONS</span>
+        <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarOffcanvas">
+          <span class="navbar-toggler-icon"
+            style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 30 30\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath stroke=\'rgba(0, 0, 0, 0.7)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-miterlimit=\'10\' d=\'M4 7h22M4 15h22M4 23h22\'/%3E%3C/svg%3E'); display:inline-block; width:1.5em; height:1.5em; vertical-align:middle; background-repeat:no-repeat; background-position:center;"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sidebar (Offcanvas on Mobile, Fixed on Desktop) -->
+    <div class="offcanvas-lg offcanvas-start sidebar" tabindex="-1" id="sidebarOffcanvas">
+      <div class="offcanvas-header bg-warning">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas"
+          aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body sidebar-content">
+        <div class="sidebar-header d-none d-lg-block">
+          <img src="https://lh3.googleusercontent.com/d/1RQzWWDrdStBjWZiuZNXk7qzeoQCRJmbI" alt="Logo"
+            class="img-fluid rounded-circle mb-2" style="max-width: 80px;">
+          <h4>HAPPY TUITIONS</h4>
+        </div>
+
+        <div class="d-grid gap-2 w-100">
+          <button onclick="showPage('addStudent'); closeMobileMenu()"><i class="fas fa-user-plus me-2"></i>Add New Student</button>
+          <button onclick="showPage('studentDetails'); closeMobileMenu()"><i class="fas fa-users me-2"></i>Student Details</button>
+          <button onclick="showPage('studentDashboard'); closeMobileMenu()"><i class="fas fa-chart-line me-2"></i>Student Dashboard</button>
+          <button onclick="showPage('weeklyTestResults'); closeMobileMenu()" style="display:none;"><i class="fas fa-file-invoice me-2"></i>Weekly Test Results</button>
+          <button onclick="showPage('weeklyTestDashboard'); closeMobileMenu()" style="display:none;"><i class="fas fa-vial me-2"></i>Weekly Test Dashboard</button>
+          <button onclick="showPage('markAttendance'); closeMobileMenu()" style="display:none;"><i class="fas fa-calendar-check me-2"></i>Mark Attendance</button>
+          <button onclick="showPage('attendanceDashboard'); closeMobileMenu()" style="display:none;"><i class="fas fa-clipboard-list me-2"></i>Attendance Dashboard</button>
+          <!-- Faculty and Admin buttons removed as per request -->
+          <button id="facultyDashboardBtn" style="display:none;"
+            onclick="showPage('facultyDashboard'); closeMobileMenu()"><i class="fas fa-chalkboard-teacher me-2"></i>Faculty Dashboard</button>
+          <!--
+          <button id="manageAdminsBtn" style="display:none;" onclick="showPage('manageAdmins'); closeMobileMenu()"><i class="fas fa-user-shield me-2"></i>Manage Admins</button>
+          -->
+
+          <!-- New Super Admin Buttons -->
+          <button id="feeDetailsBtn" style="display:none;" onclick="showPage('feeDetails'); closeMobileMenu()"><i class="fas fa-receipt me-2"></i>Fee Details</button>
+          <button id="addEventBtn" style="display:none;" onclick="showPage('addEvent'); closeMobileMenu()"><i class="fas fa-calendar-plus me-2"></i>Add Event</button>
+          <button id="eventExpensesBtn" style="display:none;"
+            onclick="showPage('eventExpenses'); closeMobileMenu()"><i class="fas fa-money-bill-wave me-2"></i>Event Expenses</button>
+          <button id="revenueBtn" style="display:none;"
+            onclick="showPage('revenue'); closeMobileMenu()"><i class="fas fa-vault me-2"></i>Revenue</button>
+          <button id="monthWisePaymentsBtn" style="display:none;"
+            onclick="showPage('monthWisePayments'); closeMobileMenu()"><i class="fas fa-calendar-alt me-2"></i>Month Wise Payments</button>
+          <button id="pendingPaymentsBtn" style="display:none;"
+            onclick="showPage('pendingPayments'); closeMobileMenu()"><i class="fas fa-exclamation-circle me-2"></i>Pending Payments</button>
+          <button onclick="logout()" class="btn-danger mt-2"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+        </div>
+
+        <div class="footer mt-auto">Crafted by <img
+            src="https://lh3.googleusercontent.com/d/1-MDUOULMfWJBCNzte7AI8Y-KcftD6RpI" alt="Logo"
+            style="height:20px; vertical-align:middle;"></div>
+      </div>
+    </div>
+
+    <div class="content" id="content"></div>
+
+    <!-- Payment History Modal -->
+    <div class="modal fade" id="paymentHistoryModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">Payment History</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Date (dd-mm-yyyy)</th>
+                  <th>Amount</th>
+                  <th>Month-Year</th>
+                </tr>
+              </thead>
+              <tbody id="paymentHistoryBody">
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true" style="z-index: 2050;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title">Change Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <input type="text" id="cpUsername" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Old Password</label>
+              <input type="password" id="cpOldPassword" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">New Password</label>
+              <input type="password" id="cpNewPassword" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="submitChangePassword()">Update Password</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deleted Students Modal -->
+    <div class="modal fade" id="deletedStudentsModal" tabindex="-1" aria-hidden="true" style="z-index: 2050;">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title"><i class="fas fa-user-times me-2"></i>Deleted Students & Alumni</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+               <input type="text" id="deletedStudentSearch" class="form-control" placeholder="Search by name or contact..." onkeypress="if(event.key==='Enter') searchDeletedStudents()">
+               <button class="btn btn-danger" onclick="searchDeletedStudents()">Search</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-premium" id="deletedStudentsTable">
+                <thead class="bg-danger text-white">
+                  <tr><th>ID</th><th>Date Joining</th><th>Name</th><th>Class</th><th>Parent Contact</th><th>Actual Fee</th><th>Paid Fee</th><th>Deleted At</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- GOOGLE SCRIPT RUN POLYFILL ---
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzgPAHaihp-o9f_a2wuoHMykILtgIYS-0R1OwAk2Pb1t4F4caqeQf6YSOOwAx1Mjjo5/exec';
+
+    if (typeof google === 'undefined' || !google.script || !google.script.run) {
+      window.google = {
+        script: {
+          run: {
+            withSuccessHandler: function (successCallback) {
+              this._onSuccess = successCallback;
+              return this;
+            },
+            withFailureHandler: function (failureCallback) {
+              this._onFailure = failureCallback;
+              return this;
+            },
+            // Dynamic handler for all function calls
+          }
+        }
+      };
+
+      // Define proxies for all functions used in the app
+      const functionsToProxy = [
+        'login', 'getStudents', 'getStudentStats', 'addStudent', 'updateStudent', 'deleteStudent',
+        'getTests', 'getTestStats', 'addTest', 'updateTest', 'deleteTest',
+        'getEvents', 'getEventStats', 'addEvent', 'deleteEvent', 'getFeeDetails', 'getFeeStats',
+        'getRevenueData', 'getMonthYearOptions', 'getMonthWiseData', 'getPendingPaymentsData', 'getPaymentHistoryDebug',
+        'changePassword', 'getNextId', 'exportToExcel', 'exportToPDF', 'getDashboardData',
+        'getFaculty', 'addFaculty', 'updateFaculty', 'deleteFaculty', 'uploadImage', 'getDeletedStudents'
+      ];
+
+      functionsToProxy.forEach(fnName => {
+        google.script.run[fnName] = function (...args) {
+          const successCallback = this._onSuccess;
+          const failureCallback = this._onFailure;
+
+          // Clear internal handlers to prevent state leakage to next call
+          this._onSuccess = null;
+          this._onFailure = null;
+
+          fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+              functionName: fnName,
+              arguments: args
+            })
+          })
+            .then(response => response.json())
+            .then(res => {
+              if (res.success) {
+                if (successCallback) successCallback(res.data);
+              } else {
+                if (failureCallback) failureCallback(res.error);
+                else console.error('GAS Error:', res.error);
+              }
+            })
+            .catch(err => {
+              if (failureCallback) failureCallback(err);
+              else console.error('Fetch Error:', err);
+            });
+        };
+      });
+    }
+
+    function handleEnter(e) {
+      if (e.key === "Enter") login();
+    }
+
+    // Helper to format date as dd-mm-yyyy for display
+    function formatDateDisplay(dateString) {
+      if (!dateString) return '';
+      const s = String(dateString);
+      const parts = s.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+      return s;
+    }
+
+    // --- CACHE & DATA STORE ---
+    const DATA_CACHE = {
+      students: null,
+      studentStats: null,
+      tests: null,
+      testStats: null,
+      faculty: null,
+      facultyStats: null,
+      events: null,
+      eventStats: null,
+      feeStats: null,
+      feeDetails: null,
+      revenueData: null,
+      monthYearOptions: null,
+      monthWiseData: {},
+      pendingPaymentsData: {}
+    };
+
+    const UI_STATE = {
+      selectedMonthWiseMonth: '',
+      selectedPendingMonth: ''
+    };
+
+    const PRIMARY_CLASSES = ['LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Primary'];
+    const SENIOR_CLASSES = ['Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Inter 1st year', 'Inter 2nd year', 'Senior', 'Diploma', 'Degree'];
+
+    function isSeniorClass(cls) {
+      const c = (cls || '').toString().toLowerCase().trim();
+      if (!c) return false;
+      const seniorKeywords = ['6', '7', '8', '9', '10', 'inter', 'senior', 'high school', 'diploma', 'degree'];
+      if (seniorKeywords.some(k => c.includes(k))) return true;
+      const classNum = parseInt(c.replace(/\D/g, ''));
+      if (!isNaN(classNum) && classNum >= 6) return true;
+      return false;
+    }
+
+    function invalidateCache(keys) {
+      if (!keys) {
+        Object.keys(DATA_CACHE).forEach(k => {
+          if (DATA_CACHE[k] && typeof DATA_CACHE[k] === 'object' && !Array.isArray(DATA_CACHE[k])) DATA_CACHE[k] = {};
+          else DATA_CACHE[k] = null;
+        });
+        return;
+      }
+      keys.forEach(key => {
+        if (DATA_CACHE[key] && typeof DATA_CACHE[key] === 'object' && !Array.isArray(DATA_CACHE[key])) DATA_CACHE[key] = {};
+        else DATA_CACHE[key] = null;
+      });
+    }
+
+
+    function closeMobileMenu() {
+      // Check if we are in mobile view
+      const offcanvasElement = document.getElementById('sidebarOffcanvas');
+      const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+      if (bsOffcanvas && window.innerWidth < 768) {
+        bsOffcanvas.hide();
+      }
+    }
+
+    function convertDriveLink(url) {
+      if (typeof url === 'string' && url.includes('drive.google.com') && url.indexOf('id=') > -1) {
+        var match = url.match(/id=([^&]+)/);
+        if (match && match[1]) {
+          // =s500 ensures a high-quality 500px image instead of a small thumbnail
+          return 'https://lh3.googleusercontent.com/d/' + match[1] + '=s500';
+        }
+      }
+      return url;
+    }
+
+    let role = '';
+    function handleLoginSuccess(userRole) {
+      role = userRole;
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+
+      // Helper for safe element access
+      const setDisplay = (id, displayValue) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = displayValue;
+      };
+
+      // Hide all admin/faculty features by default
+      setDisplay('feeDetailsBtn', 'none');
+      setDisplay('addEventBtn', 'none');
+      setDisplay('facultyDashboardBtn', 'none');
+
+      if (role === 'super admin') {
+        setDisplay('feeDetailsBtn', 'block');
+        setDisplay('addEventBtn', 'block');
+        setDisplay('facultyDashboardBtn', 'block');
+        setDisplay('monthWisePaymentsBtn', 'block');
+        setDisplay('pendingPaymentsBtn', 'block');
+      }
+
+      // Batch load dashboard data
+      google.script.run.withSuccessHandler(data => {
+        DATA_CACHE.studentStats = data.studentStats;
+        DATA_CACHE.feeStats = data.feeStats;
+        DATA_CACHE.testStats = data.testStats;
+        DATA_CACHE.eventStats = data.eventStats;
+        showPage('studentDashboard');
+      }).getDashboardData();
+    }
+
+    function login() {
+      // DEBUG: Verify function call
+      console.log("Login button clicked");
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        showPremiumAlert("Please enter both username and password", "Error", "danger");
+        return;
+      }
+
+      google.script.run
+        .withFailureHandler(err => {
+          console.error("Login Failed:", err);
+          showPremiumAlert("Login Script Failed: " + err.message, "Error", "danger");
+        })
+        .withSuccessHandler(res => {
+          console.log("Login Response:", res);
+          if (res.success) {
+            // Save Session
+            sessionStorage.setItem('user', JSON.stringify({ username: username, role: res.role }));
+            handleLoginSuccess(res.role);
+          } else {
+            showPremiumAlert(res.message || 'Invalid credentials', "Login Failed", "danger");
+          }
+        }).login(username, password);
+    }
+
+    function logout() {
+      sessionStorage.removeItem('user');
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('login').style.display = 'flex';
+      role = '';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+
+    // Initialize Session
+    window.onload = function () {
+      const storedUser = sessionStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const user = JSON.parse(storedUser);
+          if (user && user.role) {
+            console.log("Restoring session for role:", user.role);
+            handleLoginSuccess(user.role);
+          }
+        } catch (e) {
+          console.error("Session restore failed", e);
+          sessionStorage.removeItem('user');
+        }
+      }
+    };
+
+    function openChangePasswordModal() {
+      const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+      document.getElementById('cpUsername').value = '';
+      document.getElementById('cpOldPassword').value = '';
+      document.getElementById('cpNewPassword').value = '';
+      modal.show();
+    }
+
+    function submitChangePassword() {
+      const u = document.getElementById('cpUsername').value;
+      const o = document.getElementById('cpOldPassword').value;
+      const n = document.getElementById('cpNewPassword').value;
+
+      if (!u || !o || !n) return showPremiumAlert("All fields are required", "Error", "danger");
+
+      google.script.run.withSuccessHandler(res => {
+        if (res.success) {
+          showPremiumAlert("Password updated successfully! Please login with new password.", "Success", "success");
+          const modalEl = document.getElementById('changePasswordModal');
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          modal.hide();
+        } else {
+          showPremiumAlert(res.message || "Update failed", "Error", "danger");
+        }
+      }).changePassword(u, o, n);
+    }
+
+    function closeMobileMenu() {
+      const sidebar = document.getElementById('sidebarOffcanvas');
+      // Check if it's currently open (has 'show' class)
+      if (sidebar && sidebar.classList.contains('show')) {
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebar);
+        if (bsOffcanvas) {
+          bsOffcanvas.hide();
+        }
+      }
+    }
+
+    function showPage(page) {
+      const content = document.getElementById('content');
+      content.innerHTML = '';
+      if (page === 'addStudent') renderAddStudent();
+      else if (page === 'studentDetails') renderStudentDetails();
+      else if (page === 'studentDashboard') renderStudentDashboard();
+      else if (page === 'weeklyTestResults') renderWeeklyTestResults();
+      else if (page === 'weeklyTestDashboard') renderWeeklyTestDashboard();
+      else if (page === 'markAttendance') renderMarkAttendance();
+      else if (page === 'attendanceDashboard') renderAttendanceDashboard();
+      /*
+      else if (page === 'addFaculty') renderAddFaculty();
+      else if (page === 'facultyDetails') renderFacultyDetails();
+      else if (page === 'facultyDashboard') renderFacultyDashboard();
+      else if (page === 'manageAdmins') renderManageAdmins();
+      */
+      else if (page === 'feeDetails') renderFeeDetails();
+      else if (page === 'facultyDashboard') renderFacultyDashboard();
+      else if (page === 'addEvent') renderAddEvent();
+      else if (page === 'eventExpenses') renderEventExpenses();
+      else if (page === 'revenue') renderRevenue();
+      else if (page === 'monthWisePayments') renderMonthWisePayments();
+      else if (page === 'pendingPayments') renderPendingPayments();
+    }
+
+    const classes = ['LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Inter 1st year', 'Inter 2nd year', 'Diploma', 'Degree'];
+    const subjects = ['Telugu', 'Hindi', 'English', 'Maths', 'Science', 'Physics', 'Chemistry', 'Biology', 'Social', 'Others'];
+    const genders = ['Boy/Male', 'Girl/Female'];
+    const paymentModes = ['Cash', 'UPI'];
+
+    function renderAddStudent() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="card">
+          <div class="card-header">Add New Student</div>
+          <div class="card-body">
+            <form id="studentForm">
+              <div class="row">
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Admission ID</label><input type="text" id="admissionId" class="form-control" disabled placeholder="Loading..."></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Date of Joining</label><input type="date" id="dateJoining" class="form-control" required></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Name</label><input type="text" id="name" class="form-control" required></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Gender</label><select id="gender" class="form-select">${genders.map(g => `<option>${g}</option>`).join('')}</select></div>
+                
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Class</label><select id="class" class="form-select">${classes.map(c => `<option>${c}</option>`).join('')}</select></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">School Name</label><input type="text" id="schoolName" class="form-control"></div>
+               
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Parent Contact</label><input type="text" id="parentContact" class="form-control"></div>
+                <!-- Parent Name removed -->
+                
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Actual Fee</label><input type="number" id="actualFee" class="form-control" required></div>
+                
+                <div class="col-12 col-lg-6 mb-3">
+                  <label class="form-label">Paid Fee</label><input type="number" id="paidFee" class="form-control" required>
+                </div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Payment Mode</label><select id="paymentMode" class="form-select">${paymentModes.map(p => `<option>${p}</option>`).join('')}</select></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Date of Payment</label><input type="date" id="datePayment" class="form-control" required></div>
+              </div>
+              <!-- Image Capture removed -->
+              <button type="button" class="btn btn-primary" onclick="saveStudent()">Save Student</button>
+              <button type="button" class="btn btn-secondary" onclick="clearForm('studentForm')">Clear Form</button>
+            </form>
+          </div>
+        </div>
+        <button class="btn btn-info" onclick="exportData('Students', 'excel')">Export to Excel</button>
+        <button class="btn btn-info" onclick="exportData('Students', 'pdf')">Export to PDF</button>
+      `;
+      // Fetch Next ID
+      google.script.run.withSuccessHandler(id => {
+        document.getElementById('admissionId').value = id;
+      }).getNextId('student');
+    }
+
+    function loadRecentStudents() {
+      google.script.run.withSuccessHandler(data => {
+        const tbody = document.getElementById('recentStudentsTable').querySelector('tbody');
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center">No students found.</td></tr>';
+          return;
+        }
+        // Show last 5
+        const recent = data.slice(-5).reverse();
+        tbody.innerHTML = recent.map(s => `
+          <tr>
+            <td>${s[0]}</td>
+            <td>${s[2]}</td>
+            <td>${s[5]}</td>
+            <td>${formatDateDisplay(s[1])}</td>
+          </tr>
+        `).join('');
+      }).getStudents();
+    }
+
+    let videoStream = null;
+
+    function openCamera() {
+      document.getElementById('cameraContainer').style.display = 'block';
+      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        videoStream = stream;
+        document.getElementById('video').srcObject = stream;
+      }).catch(err => {
+        showPremiumAlert("Camera access denied or error: " + err, "Camera Error", "danger");
+      });
+    }
+
+    function closeCamera() {
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+        videoStream = null;
+      }
+      document.getElementById('cameraContainer').style.display = 'none';
+    }
+
+    function captureImage() {
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+
+      // Stop stream after capture
+      closeCamera();
+
+      // Show preview
+      const preview = document.getElementById('previewImage');
+      preview.src = canvas.toDataURL('image/png');
+      document.getElementById('previewContainer').style.display = 'block';
+    }
+
+    function retakeImage() {
+      document.getElementById('previewContainer').style.display = 'none';
+      openCamera();
+    }
+
+    function saveStudent() {
+      const student = {
+        DateOfJoining: document.getElementById('dateJoining').value,
+        Name: document.getElementById('name').value,
+        Gender: document.getElementById('gender').value,
+        SchoolName: document.getElementById('schoolName').value,
+        Class: document.getElementById('class').value,
+        ParentContact: document.getElementById('parentContact').value,
+        // ParentName removed
+        ActualFee: document.getElementById('actualFee').value,
+        PaidFee: document.getElementById('paidFee').value,
+        PaymentMode: document.getElementById('paymentMode').value,
+        DateOfPayment: document.getElementById('datePayment').value,
+        // StudentImageURL removed
+      };
+
+      if (!student.Name || !student.SchoolName || !student.ParentContact) {
+        return showPremiumAlert("Please fill in all mandatory fields: Name, School Name, Parent Contact", "Missing Fields", "warning");
+      }
+
+      google.script.run.withFailureHandler(onFailure).withSuccessHandler(() => {
+        invalidateCache(); // Universal clear on new student
+        showPremiumAlert("Student added!", "Success", "success");
+        clearForm('studentForm');
+      }).addStudent(student);
+    }
+
+    function clearForm(formId) {
+      document.getElementById(formId).reset();
+    }
+
+    function renderStudentDetails() {
+      const primaryClasses = ['LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'];
+      const seniorClasses = ['Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Inter 1st year', 'Inter 2nd year', 'Diploma', 'Degree'];
+
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0 text-primary">Primary & Junior (LKG - Class 5)</h4>
+          <button class="btn btn-danger btn-sm shadow-sm" onclick="showDeletedStudentsModal()"><i class="fas fa-user-slash me-1"></i>Deleted Students</button>
+        </div>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="input-group">
+               <span class="input-group-text bg-info text-white">Filter</span>
+               <select id="primaryClassFilter" class="form-select" onchange="populateStudentTable('primary')" style="max-width: 150px;">
+                 <option value="All">All Primary</option>
+                 ${primaryClasses.map(c => `<option>${c}</option>`).join('')}
+               </select>
+               <input type="text" id="primarySearch" class="form-control" placeholder="Search Primary..." onkeypress="handleSearchKey(event, 'primary')">
+               <button class="btn btn-primary" onclick="populateStudentTable('primary')">Search</button>
+            </div>
+            <div class="mt-2">
+               <span class="badge bg-secondary" id="primaryCount">Count: 0</span>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive mb-5">
+          <table class="table table-bordered table-striped" id="primaryTable">
+            <thead class="bg-info text-white">
+              <tr><th>ID</th><th>Date Joining</th><th>Name</th><th>Gender</th><th>School</th><th>Class</th><th>Parent Contact</th><th>Actual Fee</th><th>Paid Fee</th><th>Payment Mode</th><th>Date Payment</th><th>Actions</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h4 class="mb-3 text-success">High School & Inter (Class 6 - Degree)</h4>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="input-group">
+               <span class="input-group-text bg-success text-white">Filter</span>
+               <select id="seniorClassFilter" class="form-select" onchange="populateStudentTable('senior')" style="max-width: 150px;">
+                 <option value="All">All Senior</option>
+                 ${seniorClasses.map(c => `<option>${c}</option>`).join('')}
+               </select>
+               <input type="text" id="seniorSearch" class="form-control" placeholder="Search Senior..." onkeypress="handleSearchKey(event, 'senior')">
+               <button class="btn btn-success" onclick="populateStudentTable('senior')">Search</button>
+            </div>
+            <div class="mt-2">
+               <span class="badge bg-secondary" id="seniorCount">Count: 0</span>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped" id="seniorTable">
+            <thead class="bg-success text-white">
+              <tr><th>ID</th><th>Date Joining</th><th>Name</th><th>Gender</th><th>School</th><th>Class</th><th>Parent Contact</th><th>Actual Fee</th><th>Paid Fee</th><th>Payment Mode</th><th>Date Payment</th><th>Actions</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      `;
+      populateStudentTable('primary');
+      populateStudentTable('senior');
+    }
+
+    function handleSearchKey(e, type) {
+      if (e.key === "Enter") populateStudentTable(type);
+    }
+
+    function showDeletedStudentsModal() {
+      const modal = new bootstrap.Modal(document.getElementById('deletedStudentsModal'));
+      modal.show();
+      searchDeletedStudents();
+    }
+
+    function searchDeletedStudents() {
+      const searchStr = document.getElementById('deletedStudentSearch').value;
+      const tbody = document.getElementById('deletedStudentsTable').querySelector('tbody');
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center">Loading...</td></tr>';
+      
+      google.script.run
+        .withFailureHandler(err => {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-danger">Failed to load: ${err.message}</td></tr>`;
+        })
+        .withSuccessHandler(data => {
+          if (!data || data.length === 0) {
+             tbody.innerHTML = '<tr><td colspan="8" class="text-center">No deleted students found.</td></tr>';
+             return;
+          }
+          let html = '';
+          data.forEach(row => {
+            html += `<tr>
+              <td>${row[0] || ''}</td>
+              <td>${formatDateDisplay(row[1]) || ''}</td>
+              <td>${row[2] || ''}</td>
+              <td>${row[5] || ''}</td>
+              <td>${row[6] || ''}</td>
+              <td>${row[8] || ''}</td>
+              <td>${row[9] || ''}</td>
+              <td>${formatDateDisplay(row[row.length - 1]) || ''}</td>
+            </tr>`;
+          });
+          tbody.innerHTML = html;
+        }).getDeletedStudents(searchStr);
+    }
+
+    function viewPaymentHistory(id, name) {
+      console.log("Requesting history for:", id, name); // Debug Log
+      // Show Loading
+      const modalBody = document.getElementById('paymentHistoryBody');
+      modalBody.innerHTML = '<tr><td colspan="3" class="text-center">Loading history...</td></tr>';
+
+      // Show modal safely
+      const modalEl = document.getElementById('paymentHistoryModal');
+      // Check if modal instance exists or create new (avoid duplicate backdrops)
+      let modal = bootstrap.Modal.getInstance(modalEl);
+      if (!modal) {
+        modal = new bootstrap.Modal(modalEl);
+      }
+      modal.show();
+
+      google.script.run
+        .withFailureHandler(err => {
+          modalBody.innerHTML = `<tr><td colspan="3" class="text-danger">Error: ${err.message}</td></tr>`;
+        })
+        .withSuccessHandler(history => {
+          if (!history || history.length === 0) {
+            modalBody.innerHTML = '<tr><td colspan="3" class="text-center">No payment history found for this student.</td></tr>';
+            return;
+          }
+
+          if (history[0] && history[0].error) {
+            modalBody.innerHTML = `<tr><td colspan="3" class="text-danger fw-bold">${history[0].message}</td></tr>`;
+            return;
+          }
+
+          // Check for Debug/Error
+          if (history[0].error) {
+            modalBody.innerHTML = `<tr><td colspan="3" class="text-danger fw-bold">${history[0].message}</td></tr>`;
+            return;
+          }
+
+          // Check for Fallback Data
+          let html = '';
+          if (history[0].isFallback) {
+            html += `<tr><td colspan="3" class="table-warning text-center fw-bold">No direct match found.<br><small>${history[0].debug}</small><br>Showing last 5 payments in system:</td></tr>`;
+            // Add extra headers for context
+            html += `<tr class="table-light"><td colspan="3"><small>ID | Name | Date | Amount</small></td></tr>`;
+          }
+
+          html += history.map(h => {
+            // Client-side Date Formatting
+            let displayDate = h.date;
+            try {
+              if (displayDate) {
+                const d = new Date(displayDate);
+                if (!isNaN(d.getTime())) {
+                  const day = String(d.getDate()).padStart(2, '0');
+                  const month = String(d.getMonth() + 1).padStart(2, '0');
+                  const year = d.getFullYear();
+                  displayDate = `${day}-${month}-${year}`;
+                }
+              }
+            } catch (e) { console.error("Date format error", e); }
+
+            // If fallback, show ID/Name
+            if (h.isFallback) {
+              return `
+              <tr>
+                <td colspan="3">
+                  <span class="badge bg-secondary">${h.id}</span> <b>${h.studentName}</b><br>
+                  ${displayDate || '-'} | ₹${h.amount || 0} (${h.monthYear || '-'})
+                </td>
+              </tr>
+            `;
+            }
+
+            return `
+              <tr>
+                <td>${displayDate || '-'}</td>
+                <td>${h.amount || 0}</td>
+                <td>${h.monthYear || '-'}</td>
+              </tr>
+            `;
+          }).join('');
+
+          modalBody.innerHTML = html;
+        }).getPaymentHistoryDebug(id, name);
+    }
+
+    function populateStudentTable(type) {
+      const search = document.getElementById(type + 'Search').value.toLowerCase();
+      const classFilter = document.getElementById(type + 'ClassFilter').value;
+      const tableId = type + 'Table';
+
+      const primaryClasses = ['LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5'];
+      const seniorClasses = ['Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Inter 1st year', 'Inter 2nd year', 'Diploma', 'Degree'];
+      const targetGroup = (type === 'primary') ? primaryClasses : seniorClasses;
+
+      const classOrder = ['LKG', 'UKG', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Inter 1st year', 'Inter 2nd year', 'Diploma', 'Degree'];
+      const classOrderMap = classOrder.reduce((acc, cls, idx) => { acc[cls] = idx; return acc; }, {});
+
+      const processData = (data) => {
+        const tbody = document.getElementById(tableId).querySelector('tbody');
+        const countBadge = document.getElementById(type + 'Count');
+        if (!data || data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="12" class="text-danger">No students found.</td></tr>`;
+          if (countBadge) countBadge.innerText = 'Count: 0';
+          return;
+        }
+
+        let filtered = data;
+
+        // 1. Group Filter (Exhaustive & Mutually Exclusive)
+        filtered = filtered.filter(row => {
+          const cls = (row[5] || '').toString().trim();
+          const isSenior = isSeniorClass(cls);
+          return (type === 'senior') ? isSenior : !isSenior;
+        });
+
+        // 2. Specific Class Filter
+        if (classFilter && classFilter !== 'All') {
+          filtered = filtered.filter(row => (row[5] || '').toString().trim() === classFilter);
+        }
+
+        // 3. Search
+        if (search) {
+          filtered = filtered.filter(row => {
+            const name = (row[2]) ? row[2].toString().toLowerCase() : '';
+            const school = (row[4]) ? row[4].toString().toLowerCase() : '';
+            const contact = (row[6]) ? row[6].toString() : '';
+            return name.includes(search) || school.includes(search) || contact.includes(search);
+          });
+        }
+
+        // Update Count
+        if (countBadge) countBadge.innerText = 'Count: ' + filtered.length;
+
+        // 4. Sorting (LKG -> Inter)
+        filtered.sort((a, b) => {
+          const orderA = classOrderMap[a[5]] ?? 99;
+          const orderB = classOrderMap[b[5]] ?? 99;
+          if (orderA !== orderB) return orderA - orderB;
+          return a[2].toString().localeCompare(b[2].toString()); // Then Name
+        });
+
+        tbody.innerHTML = '';
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="12" class="text-center">No matching records found in this group.</td></tr>`;
+          return;
+        }
+
+        const headers = ['ID', 'Date Joining', 'Name', 'Gender', 'School', 'Class', 'Parent Contact', 'Actual Fee', 'Paid Fee', 'Payment Mode', 'Date Payment'];
+
+        filtered.forEach((row, index) => {
+          try {
+            const tr = document.createElement('tr');
+            const indicesToInclude = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11];
+
+            indicesToInclude.forEach((idx, i) => {
+              const cell = (row[idx] !== undefined && row[idx] !== null) ? row[idx] : '';
+              const td = document.createElement('td');
+              td.setAttribute('data-label', headers[i] || 'Info');
+              if (idx === 1 || idx === 11) {
+                td.innerText = formatDateDisplay(cell);
+              } else {
+                td.innerText = cell.toString();
+              }
+              tr.appendChild(td);
+            });
+
+            const td = document.createElement('td');
+            td.setAttribute('data-label', 'Actions');
+            const safeName = (row[2] || '').toString().replace(/'/g, "\\'");
+            td.innerHTML = `<div class="d-flex gap-1">
+              <button class="btn btn-warning btn-sm" onclick="editStudent('${row[0]}')">Edit</button> 
+              <button class="btn btn-info btn-sm" onclick="viewPaymentHistory('${row[0]}', '${safeName}')">History</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteStudent('${row[0]}')">Del</button>
+            </div>`;
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+          } catch (err) {
+            console.error('Error rendering row', err);
+          }
+        });
+      };
+
+      if (DATA_CACHE.students) {
+        processData(DATA_CACHE.students);
+      } else {
+        google.script.run.withSuccessHandler(data => {
+          DATA_CACHE.students = data;
+          processData(data);
+        }).getStudents();
+      }
+    }
+
+    function editStudent(id) {
+      const processEdit = (data) => {
+        const student = data.find(s => s[0] == id);
+        if (student) {
+          // Render form similar to add, prefill, then update
+          const content = document.getElementById('content');
+          content.innerHTML = `
+            <div class="card">
+              <div class="card-header">Edit Student</div>
+              <div class="card-body">
+                <form id="editStudentForm">
+                  <!-- Image removed -->
+                  <div class="row">
+                    <div class="col-lg-6 mb-3"><label class="form-label">Admission ID</label><input type="text" value="${student[0]}" class="form-control" disabled></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Date of Joining</label><input type="date" value="${formatDateForInput(student[1])}" id="editDateJoining" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Name</label><input type="text" value="${student[2]}" id="editName" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Gender</label><select id="editGender" class="form-select">${genders.map(g => `<option ${g === student[3] ? 'selected' : ''}>${g}</option>`).join('')}</select></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">School Name</label><input type="text" value="${student[4]}" id="editSchoolName" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Class</label><select id="editClass" class="form-select">${classes.map(c => `<option ${c === student[5] ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Parent Contact</label><input type="text" value="${student[6]}" id="editParentContact" class="form-control" required></div>
+                    <!-- Parent Name removed -->
+                    <div class="col-lg-6 mb-3"><label class="form-label">Actual Fee</label><input type="number" value="${student[8]}" id="editActualFee" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Paid Fee</label><input type="number" value="${student[9]}" id="editPaidFee" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Payment Mode</label><select id="editPaymentMode" class="form-select">${paymentModes.map(p => `<option ${p === student[10] ? 'selected' : ''}>${p}</option>`).join('')}</select></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Date of Payment</label><input type="date" value="${formatDateForInput(student[11])}" id="editDatePayment" class="form-control" required></div>
+                  </div>
+                  <button type="button" class="btn btn-primary" onclick="updateStudent(${id})">Update</button>
+                  <button type="button" class="btn btn-secondary" onclick="showPage('studentDetails')">Cancel</button>
+                </form>
+              </div>
+            </div>
+          `;
+        }
+      };
+
+      if (DATA_CACHE.students) {
+        processEdit(DATA_CACHE.students);
+      } else {
+        google.script.run.withSuccessHandler(data => {
+          DATA_CACHE.students = data;
+          processEdit(data);
+        }).getStudents();
+      }
+    }
+
+    function updateStudent(id) {
+      const student = {
+        DateOfJoining: document.getElementById('editDateJoining').value,
+        Name: document.getElementById('editName').value,
+        Gender: document.getElementById('editGender').value,
+        SchoolName: document.getElementById('editSchoolName').value,
+        Class: document.getElementById('editClass').value,
+        ParentContact: document.getElementById('editParentContact').value,
+        // ParentName removed
+        ActualFee: document.getElementById('editActualFee').value,
+        PaidFee: document.getElementById('editPaidFee').value,
+        PaymentMode: document.getElementById('editPaymentMode').value,
+        DateOfPayment: document.getElementById('editDatePayment').value,
+        // StudentImageURL removed
+      };
+
+      submitUpdate(id, student);
+    }
+
+    function submitUpdate(id, student) {
+      google.script.run
+        .withFailureHandler(onFailure)
+        .withSuccessHandler(() => {
+          invalidateCache(); // Universal clear on edit
+          showPremiumAlert("Student updated successfully!", "Success", "success");
+          showPage('studentDetails');
+        }).updateStudent(id, student);
+    }
+
+
+    function deleteStudent(id) {
+      showPremiumConfirm('Are you sure you want to delete this student?', 'Confirm Deletion', 'danger', () => {
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(() => {
+            invalidateCache(); // Universal clear on delete
+            populateStudentTable('primary');
+            populateStudentTable('senior');
+          })
+          .deleteStudent(id);
+      });
+    }
+
+    function renderStudentDashboard() {
+      const processStats = (stats) => {
+        const content = document.getElementById('content');
+        content.innerHTML = `
+          <div class="row mb-3">
+            <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body text-center"><h5>Total Students</h5><h3>${stats.total}</h3></div></div></div>
+            <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body text-center"><h5>Primary Students</h5><h3>${stats.primaryCount || 0}</h3></div></div></div>
+            <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body text-center"><h5>High School Students</h5><h3>${stats.seniorCount || 0}</h3></div></div></div>
+            <div class="col-md-3"><div class="card bg-warning text-dark"><div class="card-body text-center"><h5>Boys / Girls</h5><h3>${stats.boys} / ${stats.girls}</h3></div></div></div>
+          </div>
+          <canvas id="classChart"></canvas>
+        `;
+        const ctx = document.getElementById('classChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: Object.keys(stats.classCounts),
+            datasets: [{ label: 'Students per Class', data: Object.values(stats.classCounts), backgroundColor: '#87ceeb' }]
+          },
+          options: { scales: { y: { beginAtZero: true } } }
+        });
+      };
+
+      if (DATA_CACHE.studentStats) {
+        processStats(DATA_CACHE.studentStats);
+      } else {
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(stats => {
+            DATA_CACHE.studentStats = stats;
+            processStats(stats);
+          }).getStudentStats();
+      }
+    }
+
+    function renderWeeklyTestResults() {
+      return;
+    }
+
+    function renderWeeklyTestDashboard() {
+      return;
+    }
+
+    function searchTests() {
+      const search = document.getElementById('testSearch').value.toLowerCase();
+
+      const processData = (data) => {
+        if (!data || data.length === 0) {
+          const tbody = document.getElementById('testTable').querySelector('tbody');
+          tbody.innerHTML = `<tr><td colspan="12" class="text-danger">No tests found.</td></tr>`;
+          return;
+        }
+
+        let filtered = data;
+        if (search) {
+          filtered = data.filter(row =>
+            (row[1] && row[1].toString().toLowerCase().includes(search)) ||
+            (row[9] && row[9].toString().includes(search))
+          );
+        }
+
+        const tbody = document.getElementById('testTable').querySelector('tbody');
+        tbody.innerHTML = '';
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="12" class="text-center">No matching tests found.</td></tr>`;
+          return;
+        }
+
+        const headers = ['ID', 'Student Name', 'Class', 'Week 1', 'Week 2', 'Week 3', 'Week 4', 'Avg', 'Date', 'Contact', 'Remarks'];
+        filtered.forEach(row => {
+          const tr = document.createElement('tr');
+          row.forEach((cell, i) => {
+            const td = document.createElement('td');
+            td.setAttribute('data-label', headers[i] || 'Info');
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          const td = document.createElement('td');
+          td.setAttribute('data-label', 'Actions');
+          td.innerHTML = `<button class="btn btn-warning btn-sm" onclick="editTest(${row[0]})">Edit</button> <button class="btn btn-danger btn-sm" onclick="deleteTest(${row[0]})">Delete</button>`;
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        });
+      };
+
+      if (DATA_CACHE.tests) {
+        processData(DATA_CACHE.tests);
+      } else {
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(data => {
+            DATA_CACHE.tests = data;
+            processData(data);
+          }).getTests();
+      }
+    }
+
+    function editTest(id) {
+      const processEdit = (data) => {
+        const test = data.find(t => t[0] == id);
+        if (test) {
+          const content = document.getElementById('content');
+          content.innerHTML = `
+            <div class="card">
+              <div class="card-header">Edit Test</div>
+              <div class="card-body">
+                <form id="editTestForm">
+                  <div class="row">
+                    <div class="col-lg-6 mb-3"><label class="form-label">ID</label><input type="text" value="${test[0]}" class="form-control" disabled></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Student Name</label><input type="text" value="${test[1]}" id="editTestStudentName" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Class</label><select id="editTestClass" class="form-select">${classes.map(c => `<option ${c === test[2] ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Week 1 Marks</label><input type="number" value="${test[3]}" id="editWeek1" class="form-control"></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Week 2 Marks</label><input type="number" value="${test[4]}" id="editWeek2" class="form-control"></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Week 3 Marks</label><input type="number" value="${test[5]}" id="editWeek3" class="form-control"></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Week 4 Marks</label><input type="number" value="${test[6]}" id="editWeek4" class="form-control"></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Date of Exam</label><input type="date" value="${test[8]}" id="editDateExam" class="form-control" required></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Parent Contact</label><input type="text" value="${test[9]}" id="editTestParentContact" class="form-control"></div>
+                    <div class="col-lg-6 mb-3"><label class="form-label">Remarks</label><input type="text" value="${test[10]}" id="editRemarks" class="form-control"></div>
+                  </div>
+                  <button type="button" class="btn btn-primary" onclick="updateTest(${id})">Update</button>
+                  <button type="button" class="btn btn-secondary" onclick="showPage('weeklyTestDashboard')">Cancel</button>
+                </form>
+              </div>
+            </div>
+          `;
+        }
+      };
+
+      if (DATA_CACHE.tests) {
+        processEdit(DATA_CACHE.tests);
+      } else {
+        google.script.run.withSuccessHandler(data => {
+          DATA_CACHE.tests = data;
+          processEdit(data);
+        }).getTests();
+      }
+    }
+
+    function updateTest(id) {
+      const test = {
+        StudentName: document.getElementById('editTestStudentName').value,
+        Class: document.getElementById('editTestClass').value,
+        Week1Marks: document.getElementById('editWeek1').value,
+        Week2Marks: document.getElementById('editWeek2').value,
+        Week3Marks: document.getElementById('editWeek3').value,
+        Week4Marks: document.getElementById('editWeek4').value,
+        DateOfExam: document.getElementById('editDateExam').value,
+        ParentContact: document.getElementById('editTestParentContact').value,
+        Remarks: document.getElementById('editRemarks').value
+      };
+      google.script.run
+        .withSuccessHandler(() => {
+          invalidateCache(['tests', 'testStats']);
+          showPage('weeklyTestDashboard');
+        })
+        .updateTest(id, test);
+    }
+
+    function deleteTest(id) {
+      showPremiumConfirm('Are you sure you want to delete this test?', 'Confirm Deletion', 'danger', () => {
+        google.script.run
+          .withSuccessHandler(() => {
+            invalidateCache(['tests', 'testStats']);
+            searchTests();
+          })
+          .deleteTest(id);
+      });
+    }
+
+    function renderFacultyDashboard() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="text-primary fw-bold">Faculty Directory</h4>
+        </div>
+        <div class="row g-2 mb-4">
+          <div class="col-12 col-md-4">
+            <button class="btn btn-outline-secondary w-100 shadow-sm fw-bold py-3" onclick="showInlineFacultyForm('Old Faculty')">
+              <i class="fas fa-history me-2 text-secondary"></i>Old Faculty
+            </button>
+          </div>
+          <div class="col-12 col-md-4">
+            <button class="btn btn-primary w-100 shadow-sm fw-bold py-3" onclick="showInlineFacultyForm('New Faculty')">
+              <i class="fas fa-user-plus me-2"></i>New Faculty
+            </button>
+          </div>
+          <div class="col-12 col-md-4">
+            <button class="btn btn-outline-warning w-100 shadow-sm fw-bold py-3" onclick="showInlineFacultyForm('Waitlist')">
+              <i class="fas fa-hourglass-half me-2 text-warning"></i>Waitlist
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline Faculty Form -->
+        <div id="facultyFormContainer" style="display:none;" class="mb-4"></div>
+
+        <div class="card mb-4 border-0 shadow-sm">
+          <div class="card-body">
+             <div class="input-group">
+               <input type="text" id="facultySearch" class="form-control" placeholder="Search by name or qualification..." onkeypress="if(event.key==='Enter') searchFaculty()">
+               <button class="btn btn-primary px-4" onclick="searchFaculty()">Search</button>
+             </div>
+          </div>
+        </div>
+        <div id="facultyCardsContainer" class="row">
+           <div class="col-12 text-center p-5">
+             <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+           </div>
+        </div>
+      `;
+      searchFaculty();
+    }
+
+    function showInlineFacultyForm(label = 'Add Faculty') {
+      facPhotoData = null; // CRITICAL: Reset photo data for new entry
+      
+      // Map labels to shorter versions
+      let shortType = '';
+      if (label.includes('Old')) shortType = 'Old';
+      else if (label.includes('New')) shortType = 'New';
+      else if (label.includes('Waitlist')) shortType = 'Waitlist';
+      else shortType = 'New'; // Default
+
+      const container = document.getElementById('facultyFormContainer');
+      container.innerHTML = `
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <span class="fw-bold">${label}</span>
+            <input type="hidden" id="facType" value="${shortType}">
+            <button type="button" class="btn-close btn-close-white" onclick="closeInlineFacultyForm()"></button>
+          </div>
+          <div class="card-body">
+            <form id="facultyForm">
+              <div class="row">
+                <div class="col-12 col-lg-6 mb-3">
+                  <label class="form-label">Faculty ID</label>
+                  <input type="text" id="facIdDisplay" class="form-control bg-light fw-bold text-primary" readonly value="Loading...">
+                </div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Name</label><input type="text" id="facName" class="form-control" required></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Qualification</label><input type="text" id="facQualification" class="form-control" required></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Contact Number</label><input type="text" id="facContact" class="form-control" required></div>
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Date of Joining</label><input type="date" id="facDOJ" class="form-control"></div>
+                
+                <div class="col-12 col-lg-6 mb-3" id="facTypeContainer" style="display:none;">
+                  <label class="form-label">Faculty Category</label>
+                  <select id="facTypeDisplay" class="form-select" onchange="document.getElementById('facType').value = this.value">
+                    <option value="New" ${shortType === 'New' ? 'selected' : ''}>New</option>
+                    <option value="Old" ${shortType === 'Old' ? 'selected' : ''}>Old</option>
+                    <option value="Waitlist" ${shortType === 'Waitlist' ? 'selected' : ''}>Waitlist</option>
+                  </select>
+                </div>
+
+                <div class="col-12 mb-3">
+                  <label class="form-label">Subjects Deal (Select Multiple)</label>
+                  <div class="row">
+                    ${FACULTY_SUBJECTS.map(s => `
+                      <div class="col-6 col-md-3">
+                        <div class="form-check">
+                          <input class="form-check-input fac-sub" type="checkbox" value="${s}" id="sub_${s}">
+                          <label class="form-check-label" for="sub_${s}">${s}</label>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-6 mb-3"><label class="form-label">Remarks</label><input type="text" id="facRemarks" class="form-control"></div>
+                
+                <div class="col-12 mb-3">
+                  <label class="form-label">Faculty Photo</label>
+                  <div class="d-flex gap-2 align-items-center">
+                    <button type="button" class="btn btn-info btn-sm" onclick="openFacultyCamera()">Capture Photo</button>
+                    <input type="file" id="facPhotoFile" class="form-control form-control-sm" accept="image/*" onchange="previewFacFile(this)" style="max-width:300px;">
+                  </div>
+                  <div id="facCameraContainer" style="display:none;" class="mt-2 text-center">
+                    <video id="facVideo" autoplay playsinline style="max-width:300px; border:1px solid #ccc;"></video>
+                    <canvas id="facCanvas" style="display:none;"></canvas>
+                    <div class="mt-2">
+                       <button type="button" class="btn btn-info btn-sm" onclick="flipFacultyCamera()"><i class="fas fa-sync-alt"></i> Flip</button>
+                       <button type="button" class="btn btn-success btn-sm" onclick="captureFacPhoto()">Take Snap</button>
+                       <button type="button" class="btn btn-secondary btn-sm" onclick="closeFacCamera()">Cancel</button>
+                    </div>
+                  </div>
+                  <div id="facPreviewContainer" style="display:none;" class="mt-2 text-center border p-2 rounded bg-light">
+                    <img id="facPreview" src="" style="max-width:150px; border:1px solid #ddd; padding:5px; border-radius:10px;">
+                    <div class="mt-2">
+                      <button type="button" class="btn btn-danger btn-sm" onclick="removeFacPhoto()">Remove Photo</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3 border-top pt-3 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary" onclick="closeInlineFacultyForm()">Cancel</button>
+                <button type="button" id="facSaveBtn" class="btn btn-primary px-4" onclick="saveFaculty()">Save Faculty</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      container.style.display = 'block';
+      container.scrollIntoView({ behavior: 'smooth' });
+
+      // Fetch next ID if it's a new entry
+      if (label.includes('Add') || label.includes('Faculty')) {
+        google.script.run.withSuccessHandler(id => {
+          const idInput = document.getElementById('facIdDisplay');
+          if (idInput) idInput.value = id;
+        }).getNextId('faculty');
+      }
+    }
+
+    function closeInlineFacultyForm() {
+      closeFacCamera();
+      document.getElementById('facultyFormContainer').style.display = 'none';
+      facPhotoData = null;
+    }
+    let localFacultyCache = null;
+
+    function searchFaculty(forceRefresh = false) {
+      const search = (document.getElementById('facultySearch')?.value || '').toLowerCase();
+      const container = document.getElementById('facultyCardsContainer');
+      
+      const renderFromData = (data) => {
+        container.innerHTML = '';
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="col-12 text-center p-5"><h5 class="text-muted">No faculty members found.</h5></div>';
+          return;
+        }
+
+        // Apply search filter locally
+        const filtered = data.filter(row => 
+          search === '' || 
+          (row[1] && row[1].toString().toLowerCase().includes(search)) ||
+          (row[2] && row[2].toString().toLowerCase().includes(search)) ||
+          (row[3] && row[3].toString().includes(search))
+        );
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="col-12 text-center p-5"><h5 class="text-muted">No matching results.</h5></div>';
+          return;
+        }
+
+        filtered.forEach(row => {
+          const photoUrl = row[5] ? convertDriveLink(row[5]) : '';
+          const subjects = Array.isArray(row[4]) ? row[4] : (row[4] ? row[4].split(',') : []);
+          let type = row[8] || 'New';
+          let badgeClass = 'bg-primary text-white';
+
+          if (type.toLowerCase().includes('old')) {
+            type = 'Old';
+            badgeClass = 'bg-secondary text-white';
+          } else if (type.toLowerCase().includes('waitlist')) {
+            type = 'Waitlist';
+            badgeClass = 'bg-warning text-dark';
+          } else if (type.toLowerCase().includes('new')) {
+            type = 'New';
+            badgeClass = 'bg-primary text-white';
+          }
+
+          const col = document.createElement('div');
+          col.className = 'col-12 col-sm-6 col-lg-4 col-xl-3 mb-4';
+          col.innerHTML = `
+            <div class="card faculty-id-card h-100 border-0 shadow-sm">
+              <div class="id-card-photo-container">
+                <div class="id-card-photo-wrapper">
+                  ${photoUrl
+                    ? `<img src="${photoUrl}" class="id-card-photo" alt="${row[1]}">`
+                    : `<div class="id-card-photo d-flex align-items-center justify-content-center bg-white text-primary fw-bold" style="font-size: 2rem;">${row[1].charAt(0)}</div>`
+                  }
+                </div>
+                <div class="position-absolute bottom-0 end-0 p-2">
+                  <span class="badge ${badgeClass} shadow-sm px-3">${type}</span>
+                </div>
+              </div>
+              <div class="card-body text-center d-flex flex-column id-card-details">
+                <h5 class="fw-bold text-dark mb-0">${row[1]}</h5>
+                <p class="text-muted small mb-3">Faculty ID: ${row[0]}</p>
+                <div class="text-start mb-3 border-top pt-2">
+                  <div class="mb-1"><i class="small text-muted">Qualification:</i> <span class="fw-medium">${row[2]}</span></div>
+                  <div class="mb-1"><i class="small text-muted">Contact:</i> <span class="fw-medium">${row[3]}</span></div>
+                  <div><i class="small text-muted">Joining Date:</i> <span class="fw-medium">${formatDateDisplay(row[6])}</span></div>
+                </div>
+                <div class="mb-3 text-start mt-auto">
+                  <div class="small fw-bold text-muted mb-2">Expertise:</div>
+                  <div class="d-flex flex-wrap gap-1">
+                    ${subjects.map(s => `<span class="badge bg-light text-primary border badge-subject">${s}</span>`).join('')}
+                    ${subjects.length === 0 ? '<span class="text-muted small">Not specified</span>' : ''}
+                  </div>
+                </div>
+                <div class="d-grid gap-2 mt-2">
+                  <button class="btn btn-primary btn-sm rounded-pill fw-bold" onclick="editFaculty(${row[0]})">
+                    <i class="fas fa-edit me-1"></i>Edit Profile
+                  </button>
+                  <button class="btn btn-outline-danger btn-sm rounded-pill fw-bold" onclick="confirmDeleteFaculty(${row[0]})">
+                    <i class="fas fa-trash-alt me-1"></i>Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(col);
+        });
+      };
+
+      if (localFacultyCache && !forceRefresh) {
+        renderFromData(localFacultyCache);
+      } else {
+        container.innerHTML = '<div class="col-12 text-center p-5"><div class="spinner-border text-primary" role="status"></div></div>';
+        google.script.run.withSuccessHandler(data => {
+          localFacultyCache = data;
+          renderFromData(data);
+        }).getFaculty();
+      }
+    }
+
+    const FACULTY_SUBJECTS = ['Telugu', 'Hindi', 'English', 'Maths', 'Science', 'Social', 'Physics', 'Biology'];
+
+
+    let facStream = null;
+    let facPhotoData = null;
+    let facFacingMode = 'user';
+
+    function openFacultyCamera() {
+      document.getElementById('facCameraContainer').style.display = 'block';
+      
+      if (facStream) {
+        facStream.getTracks().forEach(t => t.stop());
+      }
+      
+      const constraints = { video: { facingMode: facFacingMode } };
+      
+      navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+        facStream = stream;
+        document.getElementById('facVideo').srcObject = stream;
+      }).catch(err => {
+        if (facFacingMode === 'environment') {
+          facFacingMode = 'user';
+          openFacultyCamera();
+        } else {
+          showPremiumAlert("Camera error: " + err, "Camera Error", "danger");
+        }
+      });
+    }
+
+    function flipFacultyCamera() {
+      facFacingMode = facFacingMode === 'user' ? 'environment' : 'user';
+      openFacultyCamera();
+    }
+
+    function closeFacCamera() {
+      if (facStream) {
+        facStream.getTracks().forEach(t => t.stop());
+        facStream = null;
+      }
+      document.getElementById('facCameraContainer').style.display = 'none';
+    }
+
+    function captureFacPhoto() {
+      const video = document.getElementById('facVideo');
+      const canvas = document.getElementById('facCanvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      facPhotoData = canvas.toDataURL('image/jpeg');
+      document.getElementById('facPreview').src = facPhotoData;
+      document.getElementById('facPreviewContainer').style.display = 'block';
+      closeFacCamera();
+    }
+
+    function previewFacFile(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          facPhotoData = e.target.result;
+          document.getElementById('facPreview').src = facPhotoData;
+          document.getElementById('facPreviewContainer').style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function removeFacPhoto() {
+      facPhotoData = null;
+      document.getElementById('facPreview').src = '';
+      document.getElementById('facPreviewContainer').style.display = 'none';
+      document.getElementById('facPhotoFile').value = '';
+    }
+
+    function saveFaculty() {
+      const name = document.getElementById('facName').value;
+      const qual = document.getElementById('facQualification').value;
+      const contact = document.getElementById('facContact').value;
+      const subs = Array.from(document.querySelectorAll('.fac-sub:checked')).map(c => c.value);
+
+      if (!name || !qual || !contact) return showPremiumAlert("Please fill Name, Qualification and Contact", "Missing Fields", "warning");
+
+      const faculty = {
+        Name: name,
+        Qualification: qual,
+        ContactNumber: contact,
+        DateOfJoining: document.getElementById('facDOJ').value,
+        TeachingSubjects: subs,
+        Remarks: document.getElementById('facRemarks').value,
+        Type: document.getElementById('facType') ? document.getElementById('facType').value : '',
+        PhotoURL: ''
+      };
+
+      const proceedSave = (photoUrl = '') => {
+        faculty.PhotoURL = photoUrl;
+        console.log("Saving faculty data:", faculty);
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(() => {
+            showPremiumAlert("Faculty saved!", "Success", "success");
+            searchFaculty(true); // Force refresh cache
+            closeInlineFacultyForm();
+          }).addFaculty(faculty);
+      };
+
+      if (facPhotoData) {
+        console.log("Uploading faculty photo...");
+        const blob = facPhotoData.split(',');
+        const mime = blob[0].match(/:(.*?);/)[1];
+        const bytes = blob[1];
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(url => {
+            console.log("Photo uploaded, URL:", url);
+            proceedSave(url);
+          }).uploadImage({
+            name: 'fac_' + name + '_' + Date.now() + '.jpg',
+            mimeType: mime,
+            data: bytes
+          });
+      } else {
+        proceedSave();
+      }
+    }
+
+    function editFaculty(id) {
+      if (!id) return showPremiumAlert("Invalid Faculty ID", "Error", "danger");
+      showInlineFacultyForm('Edit Faculty');
+      
+      const formContainer = document.getElementById('facultyFormContainer');
+      const header = formContainer.querySelector('.card-header span');
+
+      const populateForm = (fac) => {
+        console.log("Populating edit form with:", fac);
+        header.innerText = 'Edit Faculty (ID: ' + id + ')';
+        
+        if (document.getElementById('facIdDisplay')) {
+          document.getElementById('facIdDisplay').value = fac[0];
+        }
+        
+        document.getElementById('facName').value = fac[1] || '';
+        document.getElementById('facQualification').value = fac[2] || '';
+        document.getElementById('facContact').value = fac[3] || '';
+        document.getElementById('facDOJ').value = fac[6] || '';
+        document.getElementById('facRemarks').value = fac[7] || '';
+        
+        if (document.getElementById('facType')) {
+          const typeVal = fac[8] || 'New';
+          document.getElementById('facType').value = typeVal;
+          if (document.getElementById('facTypeDisplay')) {
+            document.getElementById('facTypeDisplay').value = typeVal;
+            document.getElementById('facTypeContainer').style.display = 'block';
+          }
+        }
+
+        document.querySelectorAll('.fac-sub').forEach(chk => chk.checked = false);
+        const subs = Array.isArray(fac[4]) ? fac[4] : (fac[4] ? fac[4].split(',') : []);
+        subs.forEach(s => {
+          const chk = document.getElementById('sub_' + s.trim());
+          if (chk) chk.checked = true;
+        });
+
+        if (fac[5]) {
+          const photoUrl = convertDriveLink(fac[5]);
+          document.getElementById('facPreview').src = photoUrl;
+          document.getElementById('facPreviewContainer').style.display = 'block';
+        }
+
+        const saveBtn = document.getElementById('facSaveBtn');
+        if (saveBtn) {
+          saveBtn.innerText = 'Update Faculty';
+          saveBtn.onclick = () => updateFacultyData(id);
+        }
+      };
+
+      // Try local cache first
+      if (localFacultyCache) {
+        const fac = localFacultyCache.find(f => String(f[0]) == String(id));
+        if (fac) return populateForm(fac);
+      }
+
+      // Fallback to server if not found in cache
+      header.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i>Loading Faculty Details...`;
+      google.script.run
+        .withFailureHandler(err => {
+          showPremiumAlert("Error fetching data: " + err, "Error", "danger");
+          header.innerText = 'Edit Faculty (Error)';
+        })
+        .withSuccessHandler(data => {
+          if (!data || data.length === 0) {
+            showPremiumAlert("Faculty not found!", "Error", "warning");
+            header.innerText = 'Edit Faculty (Not Found)';
+            return;
+          }
+          populateForm(data[0]);
+        }).getFacultyById(id);
+    }
+
+    function updateFacultyData(id) {
+      const name = document.getElementById('facName').value;
+      const qual = document.getElementById('facQualification').value;
+      const contact = document.getElementById('facContact').value;
+      const subs = Array.from(document.querySelectorAll('.fac-sub:checked')).map(c => c.value);
+      const type = document.getElementById('facType') ? document.getElementById('facType').value : '';
+
+      if (!name || !qual || !contact) return showPremiumAlert("Please fill Name, Qualification and Contact", "Missing Fields", "warning");
+
+      const faculty = {
+        Name: name,
+        Qualification: qual,
+        ContactNumber: contact,
+        DateOfJoining: document.getElementById('facDOJ').value,
+        TeachingSubjects: subs,
+        Remarks: document.getElementById('facRemarks').value,
+        Type: type,
+        PhotoURL: document.getElementById('facPreview').src.includes('drive.google.com') ? document.getElementById('facPreview').src : ''
+      };
+
+      const currentPhoto = document.getElementById('facPreview').src;
+      // If it's a drive link and no new data was captured, keep it
+      if (currentPhoto && currentPhoto.includes('googleusercontent.com') && !facPhotoData) {
+        faculty.PhotoURL = currentPhoto;
+      }
+
+      const proceedUpdate = (photoUrl = '') => {
+        if (photoUrl) faculty.PhotoURL = photoUrl;
+        console.log("Updating faculty data (ID: " + id + "):", faculty);
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(() => {
+            showPremiumAlert("Faculty updated!", "Success", "success");
+            searchFaculty(true); // Force refresh cache
+            closeInlineFacultyForm();
+          }).updateFaculty(id, faculty);
+      };
+
+      if (facPhotoData) {
+        console.log("Uploading replacement faculty photo...");
+        const blob = facPhotoData.split(',');
+        const mime = blob[0].match(/:(.*?);/)[1];
+        const bytes = blob[1];
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(url => {
+            console.log("Replacement photo uploaded, URL:", url);
+            proceedUpdate(url);
+          }).uploadImage({
+            name: 'fac_' + name + '_' + Date.now() + '.jpg',
+            mimeType: mime,
+            data: bytes
+          });
+      } else {
+        proceedUpdate(faculty.PhotoURL);
+      }
+    }
+
+    function confirmDeleteFaculty(id) {
+      showPremiumConfirm("Are you sure you want to delete this faculty member? This action cannot be undone.", 'Confirm Deletion', 'danger', () => {
+        deleteFaculty(id);
+      });
+    }
+
+    function deleteFaculty(id) {
+      google.script.run
+        .withSuccessHandler(() => {
+          showPremiumAlert("Faculty deleted!", "Success", "success");
+          searchFaculty(true); // Force refresh cache
+        }).deleteFaculty(id);
+    }
+
+
+    function formatDateForInput(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toISOString().split('T')[0];
+    }
+
+    function onFailure(error) {
+      const msg = (error && typeof error === 'object' && error.message) ? error.message : (error || "An unknown error occurred");
+      
+      if (msg === "Failed to fetch") {
+        showPremiumAlert("Network Error: Failed to contact the Google Apps Script servers.\n\nTroubleshooting:\n1. Ensure you are connected to the Internet.\n2. Try disabling strict tracking protection.\n3. Check GAS_WEB_APP_URL.", "Network Error", "danger");
+      } else {
+        showPremiumAlert("Error: " + msg, "Error", "danger");
+      }
+      
+      console.error("Application Error:", error);
+    }
+
+    /*
+    function renderManageAdmins() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="card">
+          <div class="card-header">Add Admin</div>
+          <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-2"><input type="text" id="newUsername" class="form-control" placeholder="Username"></div>
+                <div class="col-md-4 mb-2"><input type="password" id="newPassword" class="form-control" placeholder="Password"></div>
+                <div class="col-md-4 mb-2"><select id="newRole" class="form-select"><option>super admin</option><option>admin</option></select></div>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="addNewAdmin()">Add Admin</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+        <table class="table" id="adminTable">
+          <thead><tr><th>Username</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        </div>
+      `;
+      loadAdmins();
+    }
+
+    function addNewAdmin() {
+      const username = document.getElementById('newUsername').value;
+      const password = document.getElementById('newPassword').value;
+      const role = document.getElementById('newRole').value;
+      google.script.run.addAdmin(username, password, role);
+      loadAdmins();
+    }
+
+    function loadAdmins() {
+      google.script.run.withSuccessHandler(data => {
+        const tbody = document.getElementById('adminTable').querySelector('tbody');
+        tbody.innerHTML = '';
+        data.forEach((row, index) => {
+          const tr = document.createElement('tr');
+
+          tr.innerHTML = `
+            <td data-label="Username">${row[0]}</td>
+            <td data-label="Role">${row[2]}</td>
+            <td data-label="Status">${row[3]}</td>
+            <td data-label="Actions">
+              <button class="btn btn-warning btn-sm" onclick="toggleAdminStatus(${index}, '${row[3]}')">${row[3] === 'active' ? 'Deactivate' : 'Activate'}</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteAdmin(${index})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        })
+      }).getAdmins();
+    }
+
+    function toggleAdminStatus(index, currentStatus) {
+      const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+      google.script.run.updateAdmin(index, newStatus);
+      loadAdmins();
+    }
+
+    function deleteAdmin(index) {
+      showPremiumConfirm('Are you sure you want to delete this admin?', 'Confirm Deletion', 'danger', () => {
+        google.script.run.deleteAdmin(index);
+        loadAdmins();
+      });
+    }
+    */
+
+    function exportData(sheetName, format) {
+      google.script.run
+        .withFailureHandler(onFailure)
+        .withSuccessHandler(url => {
+          window.open(url, '_blank');
+        })[format === 'excel' ? 'exportToExcel' : 'exportToPDF'](sheetName);
+    }
+    function renderMarkAttendance() {
+      return;
+    }
+
+    function saveAttendance(date) {
+      const records = [];
+      document.querySelectorAll('.status-select').forEach(select => {
+        const id = select.dataset.id;
+        const name = select.dataset.name;
+        const status = select.value;
+        const remarksInput = document.querySelector(`input.remarks[data-id="${id}"]`);
+        const remarks = remarksInput ? remarksInput.value : '';
+
+        records.push({ admissionId: id, name, status, remarks });
+      });
+
+      if (records.length === 0) return showPremiumAlert("No students to mark.", "Warning", "warning");
+
+      showPremiumConfirm(`Save attendance for ${date}?`, 'Confirm Save', 'info', () => {
+        google.script.run.withSuccessHandler(() => {
+          invalidateCache(['attendanceSummary']);
+          showPremiumAlert("Attendance saved successfully!", "Success", "success");
+          showPage('attendanceDashboard');
+        }).markAttendance(date, records);
+      });
+    }
+
+    function saveIndividualAttendance(date, id) {
+      const select = document.querySelector(`.status-select[data-id="${id}"]`);
+      const remarksInput = document.querySelector(`input.remarks[data-id="${id}"]`);
+
+      if (!select) return;
+
+      const name = select.dataset.name;
+      const status = select.value;
+      const remarks = remarksInput ? remarksInput.value : '';
+
+      const records = [{ admissionId: id, name, status, remarks }];
+
+      google.script.run.withSuccessHandler(() => {
+        invalidateCache(['attendanceSummary']);
+        showPremiumAlert(`Attendance saved for ${name}`, "Success", "success");
+      }).markAttendance(date, records);
+    }
+
+    // --- Enhanced Attendance Dashboard ---
+    function renderAttendanceDashboard() {
+      return;
+    }
+
+    function loadAttendanceRecords() {
+      const date = document.getElementById('manageDate').value;
+      if (!date) return showPremiumAlert("Please select a date", "Warning", "warning");
+
+      google.script.run.withSuccessHandler(records => {
+        const container = document.getElementById('attendanceRecordsContainer');
+        if (records.length === 0) {
+          container.innerHTML = `<div class="alert alert-info">No records found for ${date}</div>`;
+          return;
+        }
+
+        let html = `
+              <div class="card mb-3">
+                <div class="card-header">Records for ${date}</div>
+                <div class="card-body">
+                   <div class="input-group mb-2"><input type="text" id="recordSearch" class="form-control" placeholder="Search in records..." onkeyup="filterRecords()"></div>
+                   <div class="table-responsive">
+                   <table class="table" id="recordsTable">
+                     <thead><tr><th>Name</th><th>Status</th><th>Remarks</th><th>Actions</th></tr></thead>
+                     <tbody>
+            `;
+
+        records.forEach(r => {
+          html += `
+                  <tr id="row-${r.rowIndex}">
+                    <td data-label="Name">${r.name}</td>
+                    <td data-label="Status"><span id="view-status-${r.rowIndex}">${r.status}</span>
+                        <select id="edit-status-${r.rowIndex}" class="form-select" style="display:none">
+                            <option ${r.status === 'Present' ? 'selected' : ''}>Present</option>
+                            <option ${r.status === 'Absent' ? 'selected' : ''}>Absent</option>
+                        </select>
+                    </td>
+                    <td data-label="Remarks"><span id="view-remarks-${r.rowIndex}">${r.remarks || ''}</span>
+                        <input type="text" id="edit-remarks-${r.rowIndex}" value="${r.remarks || ''}" class="form-control" style="display:none">
+                    </td>
+                    <td data-label="Actions">
+                        <button class="btn btn-warning btn-sm" id="btn-edit-${r.rowIndex}" onclick="enableEdit(${r.rowIndex})">Edit</button>
+                        <button class="btn btn-success btn-sm" id="btn-save-${r.rowIndex}" onclick="saveEdit(${r.rowIndex})" style="display:none">Save</button>
+                        <button class="btn btn-secondary btn-sm" id="btn-cancel-${r.rowIndex}" onclick="cancelEdit(${r.rowIndex})" style="display:none">Cancel</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRecord(${r.rowIndex})">Delete</button>
+                    </td>
+                  </tr>
+                `;
+        });
+
+        html += `</tbody></table></div></div></div>`;
+        container.innerHTML = html;
+      }).getAttendance(date);
+    }
+
+    function filterRecords() {
+      const term = document.getElementById('recordSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#recordsTable tbody tr');
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(term) ? '' : 'none';
+      });
+    }
+
+    function enableEdit(rowIndex) {
+      document.getElementById(`view-status-${rowIndex}`).style.display = 'none';
+      document.getElementById(`edit-status-${rowIndex}`).style.display = 'block';
+      document.getElementById(`view-remarks-${rowIndex}`).style.display = 'none';
+      document.getElementById(`edit-remarks-${rowIndex}`).style.display = 'block';
+
+      document.getElementById(`btn-edit-${rowIndex}`).style.display = 'none';
+      document.getElementById(`btn-save-${rowIndex}`).style.display = 'inline-block';
+      document.getElementById(`btn-cancel-${rowIndex}`).style.display = 'inline-block';
+    }
+
+    function cancelEdit(rowIndex) {
+      document.getElementById(`view-status-${rowIndex}`).style.display = 'block';
+      document.getElementById(`edit-status-${rowIndex}`).style.display = 'none';
+      document.getElementById(`view-remarks-${rowIndex}`).style.display = 'block';
+      document.getElementById(`edit-remarks-${rowIndex}`).style.display = 'none';
+
+      document.getElementById(`btn-edit-${rowIndex}`).style.display = 'inline-block';
+      document.getElementById(`btn-save-${rowIndex}`).style.display = 'none';
+      document.getElementById(`btn-cancel-${rowIndex}`).style.display = 'none';
+    }
+
+    function saveEdit(rowIndex) {
+      const status = document.getElementById(`edit-status-${rowIndex}`).value;
+      const remarks = document.getElementById(`edit-remarks-${rowIndex}`).value;
+
+      google.script.run.withSuccessHandler(() => {
+        invalidateCache(['attendanceSummary']);
+        // Update view
+        document.getElementById(`view-status-${rowIndex}`).innerText = status;
+        document.getElementById(`view-remarks-${rowIndex}`).innerText = remarks;
+        cancelEdit(rowIndex);
+      }).updateAttendanceRecord(rowIndex, status, remarks);
+    }
+
+    function deleteRecord(rowIndex) {
+      showPremiumConfirm("Delete this attendance record?", 'Confirm Deletion', 'danger', () => {
+        google.script.run.withSuccessHandler(() => {
+          invalidateCache(['attendanceSummary']);
+          loadAttendanceRecords(); // Reload to refresh indices
+        }).deleteAttendanceRecord(rowIndex);
+      });
+    }
+
+    function filterAttendance() {
+      const search = document.getElementById('attendanceSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#attendanceStudentTable tbody tr');
+      rows.forEach(row => {
+        const name = row.cells[0].textContent.toLowerCase();
+        row.style.display = name.includes(search) ? '' : 'none';
+      });
+    }
+
+    // ------------------- NEW DASHBOARD RENDER FUNCTIONS -------------------
+
+
+    function renderFeeDetails() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div id="feeStatsCards" class="row mb-3">
+          <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body"><h5>Pending / Total Students</h5><h3 id="statTotalStudents">Loading...</h3></div></div></div>
+          <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body"><h5>Total Fee Collected</h5><h3 id="statFeeCollected">Loading...</h3></div></div></div>
+          <div class="col-md-3"><div class="card bg-warning text-dark"><div class="card-body"><h5>Total Discount</h5><h3 id="statTotalDiscount">Loading...</h3></div></div></div>
+          <div class="col-md-3"><div class="card bg-danger text-white"><div class="card-body"><h5>Total Expenses</h5><h3 id="statTotalExpensesInFee">Loading...</h3></div></div></div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="input-group">
+              <input type="month" id="feeMonthFilter" class="form-control" onchange="searchFeeDetails()" style="max-width: 200px;" title="Filter by Month">
+              <input type="text" id="feeSearch" class="form-control" placeholder="Search by name">
+              <button class="btn btn-primary" onclick="searchFeeDetails()">Search</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table" id="feeTable">
+            <thead><tr><th>Name</th><th>Class</th><th>Actual Fee</th><th>Paid Fee</th><th>Date of Payment</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      `;
+
+      // Load Stats
+      if (DATA_CACHE.feeStats) {
+        document.getElementById('statTotalStudents').innerText = DATA_CACHE.feeStats.paymentPending + '/' + DATA_CACHE.feeStats.totalStudents;
+        document.getElementById('statFeeCollected').innerText = DATA_CACHE.feeStats.totalFeeCollected;
+        document.getElementById('statTotalDiscount').innerText = DATA_CACHE.feeStats.totalDiscount;
+        document.getElementById('statTotalExpensesInFee').innerText = DATA_CACHE.feeStats.totalExpenses;
+      } else {
+        google.script.run.withSuccessHandler(stats => {
+          DATA_CACHE.feeStats = stats;
+          document.getElementById('statTotalStudents').innerText = stats.paymentPending + '/' + stats.totalStudents;
+          document.getElementById('statFeeCollected').innerText = stats.totalFeeCollected;
+          document.getElementById('statTotalDiscount').innerText = stats.totalDiscount;
+          document.getElementById('statTotalExpensesInFee').innerText = stats.totalExpenses;
+        }).getFeeStats();
+      }
+
+      // Load Table
+      searchFeeDetails();
+    }
+
+    function searchFeeDetails() {
+      const search = document.getElementById('feeSearch').value.toLowerCase();
+
+      const processData = (data) => {
+        const tbody = document.getElementById('feeTable').querySelector('tbody');
+        tbody.innerHTML = '';
+
+        let filtered = data;
+
+        // Month Filter
+        const monthFilter = document.getElementById('feeMonthFilter').value; // YYYY-MM
+        if (monthFilter) {
+          filtered = filtered.filter(row => {
+            if (!row.dateOfPayment) return false;
+            // dateOfPayment should be ISO string or date string. Check if it starts with YYYY-MM
+            // Handle various date formats if necessary
+            return row.dateOfPayment.toString().startsWith(monthFilter);
+          });
+        }
+
+        if (search) {
+          filtered = filtered.filter(row => row.name.toLowerCase().includes(search));
+        }
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center">No records found</td></tr>';
+          return;
+        }
+        filtered.forEach(row => {
+          const tr = document.createElement('tr');
+          // Row format from backend: {name, class, actualFee, paidFee, dateOfPayment}
+          tr.innerHTML = `
+              <td data-label="Name">${row.name}</td>
+              <td data-label="Class">${row.class}</td>
+              <td data-label="Actual Fee">${row.actualFee}</td>
+              <td data-label="Paid Fee">${row.paidFee}</td>
+              <td data-label="Date Payment">${row.dateOfPayment ? formatDateDisplay(row.dateOfPayment) : ''}</td>
+            `;
+          tbody.appendChild(tr);
+        });
+      };
+
+      if (DATA_CACHE.feeDetails) {
+        processData(DATA_CACHE.feeDetails);
+      } else {
+        google.script.run.withSuccessHandler(data => {
+          DATA_CACHE.feeDetails = data;
+          processData(data);
+        }).getFeeDetails();
+      }
+    }
+
+    function renderAddEvent() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="card mb-3">
+          <div class="card-header">Add New Event</div>
+          <div class="card-body">
+            <form id="eventForm">
+              <div class="row">
+                <div class="col-12 col-md-6 mb-3"><label class="form-label">Date</label><input type="date" id="eventDate" class="form-control" required></div>
+                <div class="col-12 col-md-6 mb-3"><label class="form-label">Amount Spent</label><input type="number" id="eventAmount" class="form-control" required></div>
+                <div class="col-12 col-md-12 mb-3"><label class="form-label">Event Name</label><input type="text" id="eventName" class="form-control" required></div>
+              </div>
+              <button type="button" class="btn btn-primary" onclick="saveEvent()">Add Event</button>
+            </form>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">Event List</div>
+          <div class="card-body">
+            <div class="input-group mb-2">
+               <input type="text" id="eventSearch" class="form-control" placeholder="Search event by name">
+               <button class="btn btn-primary" onclick="searchEvents()">Search</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table" id="eventTable">
+                <thead><tr><th>Date</th><th>Event Name</th><th>Amount Spent</th><th>Actions</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+      // Load events immediately
+      searchEvents();
+    }
+
+    function saveEvent() {
+      const event = {
+        date: document.getElementById('eventDate').value,
+        eventName: document.getElementById('eventName').value,
+        amountSpent: document.getElementById('eventAmount').value
+      };
+      if (!event.date || !event.eventName || !event.amountSpent) return showPremiumAlert("All fields required", "Error", "danger");
+
+      google.script.run.withSuccessHandler(() => {
+        invalidateCache(['events', 'eventStats', 'revenueData', 'feeStats']);
+        showPremiumAlert("Event added successfully!", "Success", "success");
+        document.getElementById('eventForm').reset();
+        searchEvents(); // Refresh table
+      }).addEvent(event);
+    }
+    function renderEventExpenses() {
+      return;
+    }
+
+    function searchEvents() {
+      const search = document.getElementById('eventSearch').value.toLowerCase();
+
+      const processData = (data) => {
+        const tbody = document.getElementById('eventTable').querySelector('tbody');
+        tbody.innerHTML = '';
+
+        let filtered = data;
+        if (search) {
+          filtered = data.filter(row => row[2] && row[2].toString().toLowerCase().includes(search));
+        }
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center">No events found</td></tr>';
+          return;
+        }
+        filtered.forEach(row => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+             <td data-label="Date">${row[1] ? formatDateDisplay(row[1].substring(0, 10)) : ''}</td>
+             <td data-label="Event Name">${row[2]}</td>
+             <td data-label="Amount">₹${row[3]}</td>
+             <td data-label="Actions"><button class="btn btn-danger btn-sm" onclick="deleteEvent(${row[0]})">Delete</button></td>
+           `;
+          tbody.appendChild(tr);
+        });
+      };
+
+      if (DATA_CACHE.events) {
+        processData(DATA_CACHE.events);
+      } else {
+        google.script.run.withSuccessHandler(data => {
+          DATA_CACHE.events = data;
+          processData(data);
+        }).getEvents();
+      }
+    }
+
+    function deleteEvent(id) {
+      showPremiumConfirm("Are you sure you want to delete this event?", 'Confirm Deletion', 'danger', () => {
+        google.script.run
+          .withFailureHandler(onFailure)
+          .withSuccessHandler(() => {
+            invalidateCache(['events', 'eventStats', 'revenueData', 'feeStats']);
+            searchEvents();
+          })
+          .deleteEvent(id);
+      });
+    }
+
+    function renderRevenue() {
+      // HIDDEN DASHBOARD - Return early
+      return;
+    }
+
+    function renderMonthWisePayments() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="card mb-3">
+          <div class="card-header">Month Wise Payments</div>
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <label class="form-label">Select Month-Year</label>
+                <select id="monthYearSelect" class="form-select" onchange="fetchMonthWiseData()">
+                  <option value="">Loading months...</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="monthWiseStats" class="row mb-3" style="display:none;">
+          <div class="col-md-4">
+            <div class="card bg-success text-white">
+              <div class="card-body text-center">
+                <h5>Total Collected</h5>
+                <h3 id="statTotalCollectedMonth">₹0</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-primary text-white">
+              <div class="card-body text-center">
+                <h5>Total Students Paid</h5>
+                <h3 id="statTotalStudentsPaidMonth">0</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-warning text-dark">
+              <div class="card-body text-center">
+                <h5>Pending Students</h5>
+                <h3 id="statPendingStudentsMonth">0</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive" id="monthWiseTableContainer" style="display:none;">
+          <table class="table table-bordered table-striped" id="monthWiseTable">
+            <thead class="bg-warning">
+              <tr>
+                <th>AdmissionID</th>
+                <th>StudentName</th>
+                <th>Contact</th>
+                <th>Amount</th>
+                <th>PaymentDate</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      `;
+      loadMonthYearOptions();
+    }
+
+    function loadMonthYearOptions() {
+      const select = document.getElementById('monthYearSelect');
+      if (!select) return;
+
+      const processOptions = (options) => {
+        select.innerHTML = '<option value="">-- Choose Month --</option>';
+        if (options && options.length > 0) {
+          options.forEach(opt => {
+            select.innerHTML += `<option value="${opt}">${opt}</option>`;
+          });
+          if (UI_STATE.selectedMonthWiseMonth) {
+            select.value = UI_STATE.selectedMonthWiseMonth;
+            fetchMonthWiseData();
+          } else if (options.length > 0) {
+            // Default to most recent month
+            select.value = options[0];
+            fetchMonthWiseData();
+          }
+        } else {
+          select.innerHTML = '<option value="">No history found</option>';
+        }
+      };
+
+      if (DATA_CACHE.monthYearOptions) {
+        processOptions(DATA_CACHE.monthYearOptions);
+      } else {
+        google.script.run.withSuccessHandler(options => {
+          DATA_CACHE.monthYearOptions = options;
+          processOptions(options);
+        }).getMonthYearOptions();
+      }
+    }
+
+    function fetchMonthWiseData() {
+      const monthYear = document.getElementById('monthYearSelect').value;
+      UI_STATE.selectedMonthWiseMonth = monthYear; // Save to state
+      const statsDiv = document.getElementById('monthWiseStats');
+      const tableDiv = document.getElementById('monthWiseTableContainer');
+      const tbody = document.getElementById('monthWiseTable').querySelector('tbody');
+
+      if (!monthYear) {
+        if (statsDiv) statsDiv.style.display = 'none';
+        if (tableDiv) tableDiv.style.display = 'none';
+        return;
+      }
+
+      const updateUI = (res) => {
+        if (res.error) {
+          showPremiumAlert('Error: ' + res.message, "Error", "danger");
+          return;
+        }
+
+        // Update Stats
+        document.getElementById('statTotalCollectedMonth').innerText = '₹' + res.stats.totalCollected;
+        document.getElementById('statTotalStudentsPaidMonth').innerText = res.stats.totalStudentsPaid;
+        document.getElementById('statPendingStudentsMonth').innerText = res.stats.pendingStudents;
+        statsDiv.style.display = 'flex';
+
+        // Update Table
+        tbody.innerHTML = '';
+        if (res.payments && res.payments.length > 0) {
+          res.payments.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td data-label="AdmissionID">${p.admissionId}</td>
+              <td data-label="StudentName">${p.studentName}</td>
+              <td data-label="Contact">${p.contact}</td>
+              <td data-label="Amount">₹${p.amount}</td>
+              <td data-label="PaymentDate">${formatDateDisplay(p.paymentDate)}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center">No payments found for this month</td></tr>';
+        }
+      };
+
+      if (DATA_CACHE.monthWiseData[monthYear]) {
+        tableDiv.style.display = 'block';
+        updateUI(DATA_CACHE.monthWiseData[monthYear]);
+      } else {
+        // Show Loading state
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Loading data...</td></tr>';
+        tableDiv.style.display = 'block';
+
+        google.script.run
+          .withFailureHandler(err => {
+            console.error("Month Wise Data Fetch Failed:", err);
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error loading data: ${err.message || err}</td></tr>`;
+          })
+          .withSuccessHandler(res => {
+            console.log("Month Wise Data Received:", res);
+            DATA_CACHE.monthWiseData[monthYear] = res;
+            updateUI(res);
+          }).getMonthWiseData(monthYear);
+      }
+    }
+
+    function renderPendingPayments() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="card mb-3">
+          <div class="card-header">Pending Payments</div>
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <label class="form-label">Select Month-Year</label>
+                <select id="pendingMonthYearSelect" class="form-select" onchange="fetchPendingPaymentsData()">
+                  <option value="">Loading months...</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="pendingStats" class="row mb-3" style="display:none;">
+          <div class="col-md-4">
+            <div class="card bg-danger text-white">
+              <div class="card-body text-center">
+                <h5>Pending Students</h5>
+                <h3 id="statPendingCount">0</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-success text-white">
+              <div class="card-body text-center">
+                <h5>Paid Students</h5>
+                <h3 id="statPaidCount">0</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-info text-white">
+              <div class="card-body text-center">
+                <h5>Total Students</h5>
+                <h3 id="statTotalStudentsPending">0</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive" id="pendingTableContainer" style="display:none;">
+          <table class="table table-bordered table-striped" id="pendingTable">
+            <thead class="bg-warning">
+              <tr>
+                <th>AdmissionID</th>
+                <th>StudentName</th>
+                <th>Class</th>
+                <th>Contact</th>
+                <th>Actual Fee</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      `;
+      loadPendingMonthYearOptions();
+    }
+
+    function loadPendingMonthYearOptions() {
+      const select = document.getElementById('pendingMonthYearSelect');
+      if (!select) return;
+
+      const processOptions = (options) => {
+        select.innerHTML = '<option value="">-- Choose Month --</option>';
+        if (options && options.length > 0) {
+          options.forEach(opt => {
+            select.innerHTML += `<option value="${opt}">${opt}</option>`;
+          });
+
+          // Restore state if exists or default to most recent
+          if (UI_STATE.selectedPendingMonth) {
+            select.value = UI_STATE.selectedPendingMonth;
+            fetchPendingPaymentsData();
+          } else if (options.length > 0) {
+            select.value = options[0];
+            fetchPendingPaymentsData();
+          }
+        } else {
+          select.innerHTML = '<option value="">No history found</option>';
+        }
+      };
+
+      if (DATA_CACHE.monthYearOptions) {
+        processOptions(DATA_CACHE.monthYearOptions);
+      } else {
+        google.script.run.withSuccessHandler(options => {
+          DATA_CACHE.monthYearOptions = options;
+          processOptions(options);
+        }).getMonthYearOptions();
+      }
+    }
+
+    function fetchPendingPaymentsData() {
+      const monthYear = document.getElementById('pendingMonthYearSelect').value;
+      UI_STATE.selectedPendingMonth = monthYear; // Save to state
+      const statsDiv = document.getElementById('pendingStats');
+      const tableDiv = document.getElementById('pendingTableContainer');
+      const tbody = document.getElementById('pendingTable').querySelector('tbody');
+
+      if (!monthYear) {
+        if (statsDiv) statsDiv.style.display = 'none';
+        if (tableDiv) tableDiv.style.display = 'none';
+        return;
+      }
+
+      const updateUI = (res) => {
+        if (res.error) {
+          showPremiumAlert('Error: ' + res.message, "Error", "danger");
+          return;
+        }
+
+        // Update Stats
+        document.getElementById('statPendingCount').innerText = res.stats.pendingCount;
+        document.getElementById('statPaidCount').innerText = res.stats.paidCount;
+        document.getElementById('statTotalStudentsPending').innerText = res.stats.totalStudents;
+        statsDiv.style.display = 'flex';
+
+        // Update Table
+        tbody.innerHTML = '';
+        if (res.pending && res.pending.length > 0) {
+          res.pending.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td data-label="AdmissionID">${p.admissionId}</td>
+              <td data-label="StudentName">${p.studentName}</td>
+              <td data-label="Class">${p.class}</td>
+              <td data-label="Contact">${p.contact}</td>
+              <td data-label="Actual Fee">₹${p.actualFee}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center">No pending payments for this month!</td></tr>';
+        }
+      };
+
+      if (DATA_CACHE.pendingPaymentsData[monthYear]) {
+        tableDiv.style.display = 'block';
+        updateUI(DATA_CACHE.pendingPaymentsData[monthYear]);
+      } else {
+        // Show Loading state
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Loading data...<br><small class="text-muted">This may take a moment if the sheet is large.</small></td></tr>';
+        tableDiv.style.display = 'block';
+
+        const timeoutId = setTimeout(() => {
+          const rows = tbody.querySelectorAll('tr');
+          if (rows.length === 1 && rows[0].innerText.includes('Loading data...')) {
+            const warningTr = document.createElement('tr');
+            warningTr.innerHTML = '<td colspan="5" class="text-center text-warning fw-bold">Still loading... If it takes too long, please check your internet or refresh the page.</td>';
+            tbody.appendChild(warningTr);
+          }
+        }, 15000);
+
+        google.script.run
+          .withFailureHandler(err => {
+            console.error("Pending Payments Data Fetch Failed:", err);
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error loading data: ${err.message || err}</td></tr>`;
+          })
+          .withSuccessHandler(res => {
+            console.log("Pending Payments Data Received:", res);
+            DATA_CACHE.pendingPaymentsData[monthYear] = res;
+            updateUI(res);
+          }).getPendingPaymentsData(monthYear);
+      }
+    }
+    // Premium Modal Logic
+    let premiumConfirmCallback = null;
+
+    function showPremiumAlert(message, title = 'Notification', type = 'info') {
+      document.getElementById('premiumAlertTitle').innerText = title;
+      document.getElementById('premiumAlertMessage').innerText = message;
+      
+      const header = document.getElementById('premiumAlertHeader');
+      header.className = 'modal-header text-white border-0 py-3';
+      if (type === 'danger') header.classList.add('bg-danger');
+      else if (type === 'success') header.classList.add('bg-success');
+      else header.classList.add('bg-info');
+      
+      const elem = document.getElementById('premiumAlertModal');
+      const modal = bootstrap.Modal.getInstance(elem) || new bootstrap.Modal(elem);
+      modal.show();
+    }
+
+    function showPremiumConfirm(message, title = 'Confirm Action', type = 'warning', callback) {
+      document.getElementById('premiumConfirmTitle').innerText = title;
+      document.getElementById('premiumConfirmMessage').innerText = message;
+      
+      premiumConfirmCallback = callback;
+      
+      const btn = document.getElementById('premiumConfirmBtn');
+      btn.className = 'btn px-4 rounded-pill fw-bold';
+      const header = document.getElementById('premiumConfirmHeader');
+      header.className = 'modal-header border-0';
+      if (type === 'danger') {
+        btn.classList.add('btn-danger', 'text-white');
+        header.classList.add('bg-danger', 'text-white');
+      } else {
+        btn.classList.add('btn-warning', 'text-dark');
+        header.classList.add('bg-warning', 'text-dark');
+      }
+      
+      const elem = document.getElementById('premiumConfirmModal');
+      const modal = bootstrap.Modal.getInstance(elem) || new bootstrap.Modal(elem);
+      modal.show();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('premiumConfirmBtn').addEventListener('click', function() {
+        if (premiumConfirmCallback) {
+          premiumConfirmCallback();
+          premiumConfirmCallback = null;
+        }
+      });
+    });
+  </script>
+
+  <!-- Premium Alert Modal -->
+  <div class="modal fade" id="premiumAlertModal" tabindex="-1" aria-hidden="true" style="z-index: 2060;">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+        <div class="modal-header text-white py-3" id="premiumAlertHeader">
+          <h5 class="modal-title w-100 text-center fw-bold" id="premiumAlertTitle">Notification</h5>
+        </div>
+        <div class="modal-body text-center p-4">
+          <p id="premiumAlertMessage" class="mb-0 fs-5 text-secondary"></p>
+        </div>
+        <div class="modal-footer justify-content-center border-0 pb-4">
+          <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Premium Confirm Modal -->
+  <div class="modal fade" id="premiumConfirmModal" tabindex="-1" aria-hidden="true" style="z-index: 2060;">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+        <div class="modal-header border-0" id="premiumConfirmHeader">
+          <h5 class="modal-title w-100 text-center fw-bold" id="premiumConfirmTitle">Confirm Action</h5>
+        </div>
+        <div class="modal-body text-center p-4">
+          <p id="premiumConfirmMessage" class="mb-0 fs-5 text-secondary"></p>
+        </div>
+        <div class="modal-footer justify-content-center border-0 pb-4">
+          <button type="button" class="btn btn-outline-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-warning px-4 rounded-pill fw-bold text-dark" id="premiumConfirmBtn" data-bs-dismiss="modal">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
